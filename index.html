@@ -22,13 +22,13 @@
                 <form id="messageForm" class="form" novalidate>
                     <div class="form__group">
                         <label for="userName" class="form__label">
-                            Nombre de usuario
+                            Cedula de usuario
                         </label>
                         <input 
                             type="text" 
                             id="userName" 
                             class="form__input" 
-                            placeholder="Ingresa tu nombre"
+                            placeholder="Ingresa tu cedula"
                             aria-required="true"
                         >
                         <span class="form__error" id="userNameError"></span>
@@ -40,7 +40,7 @@
                         </label>
                         <textarea 
                             id="userMessage" 
-                            class="form__input form__textarea" 
+                            class="form_input form_textarea" 
                             placeholder="Escribe tu mensaje aquí..."
                             rows="4"
                             aria-required="true"
@@ -59,7 +59,7 @@
         <section class="messages-section">
             <div class="messages-header">
                 <h2 class="messages-header__title">Mensajes Publicados</h2>
-                <span class="messages-header__count" id="messageCount">0 mensajes</span>
+                <span class="messages-header__count" id="messageCount" value="0">0 mensajes</span>
             </div>
             
             <div id="messagesContainer" class="messages-container">
@@ -70,6 +70,7 @@
                     </svg>
                     <p class="messages-empty__text">Aún no hay mensajes</p>
                     <p class="messages-empty__subtext">Completa el formulario para agregar tu primer mensaje</p>
+                    <p class="messages-empty__text">Mensaje<p>
                 </div>
             </div>
         </section>
@@ -80,6 +81,6 @@
         </footer>
     </div>
 
-    <script src="script.js" type="module" ></script>
-</body>
+    <script src="./script.js" type="module" ></script>
+</body> 
 </html>

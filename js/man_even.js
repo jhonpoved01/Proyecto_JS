@@ -23,8 +23,8 @@ export function handleFormSubmit(event, elementos, usuariosDB, callbackAgregarMe
 
     // VALIDACIÓN EXTRA: Comprobar si la cédula existe en los datos del db.json
     // Asumiendo que tu JSON tiene objetos con la propiedad 'cedula'
-    const usuarioExiste = usuariosDB.find(user => user.cedula === cedulaValor);
-
+    const usuarioExiste = usuariosDB.find(user => user.id == cedulaValor);
+  
     if (!usuarioExiste) {
         alert("La cédula ingresada no está registrada en el sistema.");
         return; // Detiene la ejecución si no existe
@@ -32,7 +32,7 @@ export function handleFormSubmit(event, elementos, usuariosDB, callbackAgregarMe
 
     // PASO 4: Crear y enviar el nuevo elemento de mensaje si todo es correcto
     // Le pasamos los datos necesarios a la sección de abajo a través del callback
-    callbackAgregarMensaje(usuarioExiste.nombre || "Usuario", mensajeValor);
+    callbackAgregarMensaje(usuarioExiste.name || "Usuario", mensajeValor);
 
     // PASO 5: Limpiar el formulario
     elementos.formulario.reset();

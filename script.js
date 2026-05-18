@@ -219,19 +219,16 @@ function createMessageElement(userName, message) {
 // ============================================
 // 4. MANEJO DE EVENTOS
 // ============================================
-// script.js
-
-// Importamos la función desde el archivo secundario
-import { handleFormSubmit } from './man_even.js';
+import { handleFormSubmit } from './js/man_even.js';
 
 // Variables para almacenar los datos y los elementos
 let usuariosAutorizados = [];
 
 // Capturamos el formulario, los inputs y el contenedor de abajo
-const formulario = document.getElementById('tu-formulario-id'); // Cambia por el ID real de tu formulario o div contenedor
-const inputCedula = document.getElementById('id-del-input-cedula');
-const inputMensaje = document.getElementById('id-del-input-mensaje');
-const contenedorMensajesPublicados = document.getElementById('mensajes-publicados'); // La sección de más abajo
+const formulario = document.getElementById('messageForm'); // Cambia por el ID real de tu formulario o div contenedor
+const inputCedula = document.getElementById('userName');
+const inputMensaje = document.getElementById('userMessage');
+const contenedorMensajesPublicados = document.getElementById('messagesContainer'); // La sección de más abajo
 
 // Agrupamos los inputs en un objeto para pasarlos más fácil
 const elementosFormulario = {
@@ -243,12 +240,12 @@ const elementosFormulario = {
 // Función para cargar los usuarios de db.json
 async function iniciarBaseDeDatos() {
     try {
-        const respuesta = await fetch('./db.json');
+        const respuesta = await fetch('./server/db.json');
         const datos = await respuesta.json();
         
         // Guardamos el array de usuarios del JSON (ajusta 'usuarios' según tu archivo JSON)
         usuariosAutorizados = datos.usuarios; 
-        
+
         // Escuchamos el evento de enviar/click del formulario
         formulario.addEventListener('submit', (event) => {
             
@@ -267,6 +264,8 @@ async function iniciarBaseDeDatos() {
                 
                 // Lo sumamos a la sección de mensajes publicados abajo
                 contenedorMensajesPublicados.innerHTML += nuevaTarjetaMensaje;
+                IncreaseCountMsg()
+                hideBoxNullMessages()
             });
         });
 
@@ -275,9 +274,21 @@ async function iniciarBaseDeDatos() {
     }
 }
 
+const hideBoxNullMessages = () => {
+    let contentNullMsg = document.getElementById('emptyState');
+    contentNullMsg.style.display = "none"
+}
+
+const IncreaseCountMsg = () => {
+    let msgCount = document.getElementById('messageCount');
+    let countValue = msgCount.getAttribute('value')
+    let increaseValue = parseInt(countValue) + 1
+    msgCount.setAttribute('value', increaseValue);
+    msgCount.textContent = increaseValue+" mensajes";
+}
+
 // Ejecutamos la carga inicial
 iniciarBaseDeDatos();
-
 // ============================================
 // 5. REGISTRO DE EVENTOS
 // ============================================
