@@ -219,44 +219,76 @@ function createMessageElement(userName, message) {
 // ============================================
 // 4. MANEJO DE EVENTOS
 // ============================================
+import { handleFormSubmit } from './js/man_even.js';
 
-/**
- * Maneja el evento de envío del formulario
- * @param {Event} event - Evento del formulario
- */
-function handleFormSubmit(event) {
-    // TODO: Implementar el manejador del evento submit
-    
-    // PASO 1: Prevenir el comportamiento por defecto del formulario
-    // Pista: event.preventDefault()
-    
-    // PASO 2: Validar el formulario
-    // Si no es válido, detener la ejecución (return)
-    
-    // PASO 3: Obtener los valores de los campos
-    
-    // PASO 4: Crear el nuevo elemento de mensaje
-    // Llamar a createMessageElement con los valores obtenidos
-    
-    // PASO 5: Limpiar el formulario
-    // Pista: messageForm.reset()
-    
-    // PASO 6: Limpiar los errores
-    
-    // PASO 7: Opcional - Enfocar el primer campo para facilitar agregar otro mensaje
-    // Pista: userNameInput.focus()
+// Variables para almacenar los datos y los elementos
+let usuariosAutorizados = [];
+
+// Capturamos el formulario, los inputs y el contenedor de abajo
+const formulario = document.getElementById('messageForm'); // Cambia por el ID real de tu formulario o div contenedor
+const inputCedula = document.getElementById('userName');
+const inputMensaje = document.getElementById('userMessage');
+const contenedorMensajesPublicados = document.getElementById('messagesContainer'); // La sección de más abajo
+
+// Agrupamos los inputs en un objeto para pasarlos más fácil
+const elementosFormulario = {
+    formulario: formulario,
+    inputCedula: inputCedula,
+    inputMensaje: inputMensaje
+};
+
+// Función para cargar los usuarios de db.json
+async function iniciarBaseDeDatos() {
+    try {
+        const respuesta = await fetch('./server/db.json');
+        const datos = await respuesta.json();
+        
+        // Guardamos el array de usuarios del JSON (ajusta 'usuarios' según tu archivo JSON)
+        usuariosAutorizados = datos.usuarios; 
+
+        // Escuchamos el evento de enviar/click del formulario
+        formulario.addEventListener('submit', (event) => {
+            
+            // Llamamos a la función importada pasándole todo lo que necesita
+            handleFormSubmit(event, elementosFormulario, usuariosAutorizados, (nombreUsuario, textoMensaje) => {
+                
+                // Esta es la función (callback) que se ejecuta si la validación fue exitosa:
+                // Crea la estructura del mensaje y la agrega a la sección de abajo
+                const nuevaTarjetaMensaje = `
+                    <div class="mensaje-tarjeta">
+                        <strong>${nombreUsuario}:</strong>
+                        <p>${textoMensaje}</p>
+                        <small>Publicado justo ahora</small>
+                    </div>
+                `;
+                
+                // Lo sumamos a la sección de mensajes publicados abajo
+                contenedorMensajesPublicados.innerHTML += nuevaTarjetaMensaje;
+                IncreaseCountMsg()
+                hideBoxNullMessages()
+            });
+        });
+
+    } catch (error) {
+        console.error("Error al cargar la base de datos:", error);
+    }
 }
 
-/**
- * Limpia los errores cuando el usuario empieza a escribir
- */
-function handleInputChange() {
-    // TODO: Implementar limpieza de errores al escribir
-    // Esta función se ejecuta cuando el usuario escribe en un campo
-    // Debe limpiar el error de ese campo específico
+const hideBoxNullMessages = () => {
+    let contentNullMsg = document.getElementById('emptyState');
+    contentNullMsg.style.display = "none"
 }
 
+const IncreaseCountMsg = () => {
+    let msgCount = document.getElementById('messageCount');
+    let countValue = msgCount.getAttribute('value')
+    let increaseValue = parseInt(countValue) + 1
+    msgCount.setAttribute('value', increaseValue);
+    msgCount.textContent = increaseValue+" mensajes";
+}
 
+// Ejecutamos la carga inicial
+iniciarBaseDeDatos();
 // ============================================
 // 5. REGISTRO DE EVENTOS
 // ============================================
