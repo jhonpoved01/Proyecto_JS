@@ -3,32 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Mensajes - Ejercicio DOM</title>
     <link rel="stylesheet" href="styles.css">
+    <title>PROYECTO JS</title>
 </head>
 <body>
     <div class="container">
         <!-- Encabezado principal -->
         <header class="header">
-            <h1 class="header__title">Registro de Mensajes</h1>
+            <h1 class="header__title">Registro de Tareas</h1>
             <p class="header__subtitle">Practica la manipulación del DOM en tiempo real</p>
         </header>
 
         <!-- Formulario de entrada -->
         <section class="form-section">
-            <div«•· class="card">
-                <h2 class="card__title">Nuevo Mensaje</h2>
-                
-                <form id="messageForm" class="form" novalidate>
+            <div class="card">
+                <h2 class="card__title">Nueva Tarea</h2>
+
+                <form id="taskForm" class="form" novalidate>
                     <div class="form__group">
                         <label for="userName" class="form__label">
-                            Nombre de usuario
+                            Id del Usuario
                         </label>
                         <input 
                             type="text" 
                             id="userName" 
                             class="form__input" 
-                            placeholder="Ingresa tu nombre"
+                            placeholder="Ingresa el ID del usuario"
                             aria-required="true"
                         >
                         <span class="form__error" id="userNameError"></span>
@@ -36,12 +36,12 @@
 
                     <div class="form__group">
                         <label for="userMessage" class="form__label">
-                            Tu mensaje
+                            Descripción de la Tarea
                         </label>
                         <textarea 
                             id="userMessage" 
                             class="form__input form__textarea" 
-                            placeholder="Escribe tu mensaje aquí..."
+                            placeholder="Escribe la descripción de la tarea aquí..."
                             rows="4"
                             aria-required="true"
                         ></textarea>
@@ -49,27 +49,27 @@
                     </div>
 
                     <button type="submit" class="btn btn--primary" id="submitBtn">
-                        <span class="btn__text">Agregar Mensaje</span>
+                        <span class="btn__text">Agregar Tarea</span>
                         <span class="btn__icon">➤</span>
                     </button>
                 </form>
             </div>
 
-        <!-- Área de mensajes -->
+        <!-- Área de tareas -->
         <section class="messages-section">
             <div class="messages-header">
-                <h2 class="messages-header__title">Mensajes Publicados</h2>
-                <span class="messages-header__count" id="messageCount">0 mensajes</span>
+                <h2 class="messages-header__title">Tareas Publicadas</h2>
+                <span class="messages-header__count" id="messageCount">0 tareas</span>
             </div>
             
             <div id="messagesContainer" class="messages-container">
-                <!-- Los mensajes se agregarán aquí dinámicamente -->
+                <!-- Las tareas se agregarán aquí dinámicamente -->
                 <div class="messages-empty" id="emptyState">
                     <svg class="messages-empty__icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
-                    <p class="messages-empty__text">Aún no hay mensajes</p>
-                    <p class="messages-empty__subtext">Completa el formulario para agregar tu primer mensaje</p>
+                    <p class="messages-empty__text">Aún no hay tareas</p>
+                    <p class="messages-empty__subtext">Completa el formulario para agregar tu primera tarea</p>
                 </div>
             </div>
         </section>
