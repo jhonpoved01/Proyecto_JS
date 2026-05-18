@@ -22,13 +22,17 @@
                 <form id="taskForm" class="form" novalidate>
                     <div class="form__group">
                         <label for="userName" class="form__label">
-                            Id del Usuario
+                          
+                            Cedula de usuario
+
                         </label>
                         <input 
                             type="text" 
                             id="userName" 
                             class="form__input" 
-                            placeholder="Ingresa el ID del usuario"
+
+                            placeholder="Ingresa tu cedula"
+
                             aria-required="true"
                         >
                         <span class="form__error" id="userNameError"></span>
@@ -40,8 +44,10 @@
                         </label>
                         <textarea 
                             id="userMessage" 
-                            class="form__input form__textarea" 
-                            placeholder="Escribe la descripción de la tarea aquí..."
+
+                            class="form_input form_textarea" 
+                            placeholder="Escribe tu mensaje aquí..."
+
                             rows="4"
                             aria-required="true"
                         ></textarea>
@@ -58,8 +64,10 @@
         <!-- Área de tareas -->
         <section class="messages-section">
             <div class="messages-header">
-                <h2 class="messages-header__title">Tareas Publicadas</h2>
-                <span class="messages-header__count" id="messageCount">0 tareas</span>
+
+                <h2 class="messages-header__title">Mensajes Publicados</h2>
+                <span class="messages-header__count" id="messageCount" value="0">0 mensajes</span>
+
             </div>
             
             <div id="messagesContainer" class="messages-container">
@@ -68,8 +76,11 @@
                     <svg class="messages-empty__icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
-                    <p class="messages-empty__text">Aún no hay tareas</p>
-                    <p class="messages-empty__subtext">Completa el formulario para agregar tu primera tarea</p>
+
+                    <p class="messages-empty__text">Aún no hay mensajes</p>
+                    <p class="messages-empty__subtext">Completa el formulario para agregar tu primer mensaje</p>
+                    <p class="messages-empty__text">Mensaje<p>
+
                 </div>
             </div>
         </section>
@@ -80,6 +91,6 @@
         </footer>
     </div>
 
-    <script src="script.js"></script>
-</body>
+    <script src="./script.js" type="module" ></script>
+</body> 
 </html>

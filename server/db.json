@@ -1,5 +1,5 @@
 {
-  "users": [
+  "usuarios": [
     { "id":1000000001, "name": "Ana Torres", "email": "ana.torres@mail.com" },
     { "id":1000000002, "name": "Carlos Gómez", "email": "carlos.gomez@mail.com" },
     { "id":1000000003, "name": "María López", "email": "maria.lopez@mail.com" },
