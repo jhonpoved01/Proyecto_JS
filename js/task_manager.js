@@ -232,7 +232,7 @@ export async function cargarTareasUsuario(usuarioId) {
         */
         const respuesta =
             await fetch(
-                `${API_URL}/tareasAsignadas?usuarioId=${usuarioId}`
+                `${API_URL}/tareasAsignadas?usuarioId=${usuarioId.toString()}`
             );
 
         /*
@@ -240,6 +240,11 @@ export async function cargarTareasUsuario(usuarioId) {
         */
         const tareas =
             await respuesta.json();
+
+        console.log(
+            'Tareas encontradas:',
+            tareas
+        );
 
         /*
             Renderizar tabla
@@ -258,8 +263,6 @@ export async function cargarTareasUsuario(usuarioId) {
     }
 
 }
-
-
 // ============================================
 // RENDERIZAR TAREAS
 // ============================================
@@ -304,6 +307,8 @@ function renderizarTareas(tareas) {
             'hidden'
         );
 
+        tabla.style.display = 'table';
+
         return;
 
     }
@@ -318,6 +323,8 @@ function renderizarTareas(tareas) {
     mensaje.classList.add(
         'hidden'
     );
+
+    mensaje.style.display = 'none';
 
     /*
         Recorrer tareas
@@ -334,39 +341,41 @@ function renderizarTareas(tareas) {
 
         fila.innerHTML = `
 
-            <td>
-                ${tarea.nombreUsuario}
-            </td>
+        <td>
+            ${tarea.titulo}
+        </td>
 
-            <td>
-                ${tarea.titulo}
-            </td>
+        <td>
+            ${tarea.descripcion}
+        </td>
 
-            <td>
-                ${tarea.descripcion}
-            </td>
+        <td>
+            ${tarea.estado}
+        </td>
 
-            <td>
-                ${tarea.estado}
-            </td>
+        <td>
+            ${new Date(
+                tarea.fechaAsignacion
+            ).toLocaleDateString()}
+        </td>
 
-            <td>
-                ${tarea.fecha}
-            </td>
+        <td>
+            ${tarea.usuarioNombre}
+        </td>
 
-            <td>
+        <td>
 
-                <button
-                    class="boton-eliminar"
-                    data-id="${tarea.id}"
-                >
+            <button
+                class="boton-eliminar"
+                data-id="${tarea.id}"
+            >
 
-                    Eliminar
+                Eliminar
 
-                </button>
+            </button>
 
-            </td>
-        `;
+        </td>
+    `;
 
         /*
             Agregar fila
@@ -421,35 +430,84 @@ export async function registrarTarea(datosTarea) {
     try {
 
         /*
-            Obtener tareas disponibles
+            =====================================
+            1. OBTENER TAREAS DISPONIBLES
+            =====================================
         */
-        const respuesta =
+        const respuestaTareas =
             await fetch(
                 `${API_URL}/tareasDisponibles`
             );
 
         /*
-            Convertir respuesta
+            Convertir respuesta JSON
         */
         const tareasDisponibles =
-            await respuesta.json();
+            await respuestaTareas.json();
 
         /*
-            Buscar tarea seleccionada
+            =====================================
+            2. BUSCAR LA TAREA SELECCIONADA
+            =====================================
         */
         const tareaSeleccionada =
             tareasDisponibles.find(
+
                 tarea =>
-                    tarea.id.toString() ===
+
+                    tarea.id ===
                     datosTarea.idTarea
+
             );
 
+        
         /*
-            Registrar tarea asignada
+            =====================================
+            3. CREAR REGISTRO DE ASIGNACIÓN
+            =====================================
+
+            NO estamos creando una tarea nueva.
+
+            Solo estamos relacionando:
+            - usuario
+            - tarea existente
+            - estado
         */
-        const respuestaRegistro =
+        const tareaAsignada = {
+
+           usuarioId:
+                usuarioActual.id.toString(),
+
+            usuarioNombre:
+                usuarioActual.name,
+
+            tareaId:
+                tareaSeleccionada.id,
+
+            titulo:
+                tareaSeleccionada.titulo,
+
+            descripcion:
+                tareaSeleccionada.descripcion,
+
+            estado:
+                datosTarea.estado,
+
+            fechaAsignacion:
+                new Date().toISOString()
+
+        };
+
+        /*
+            =====================================
+            4. GUARDAR ASIGNACIÓN
+            =====================================
+        */
+        const respuesta =
             await fetch(
+
                 `${API_URL}/tareasAsignadas`,
+
                 {
 
                     method: 'POST',
@@ -457,66 +515,52 @@ export async function registrarTarea(datosTarea) {
                     headers: {
 
                         'Content-Type':
-                        'application/json'
+                            'application/json'
 
                     },
 
-                    body: JSON.stringify({
-
-                        usuarioId:
-                            usuarioActual.id,
-
-                        nombreUsuario:
-                            usuarioActual.name,
-
-                        titulo:
-                            tareaSeleccionada.titulo,
-
-                        descripcion:
-                            tareaSeleccionada.descripcion,
-
-                        estado:
-                            datosTarea.estado,
-
-                        fecha:
-                            new Date()
-                            .toLocaleDateString()
-
-                    })
+                    body: JSON.stringify(
+                        tareaAsignada
+                    )
 
                 }
+
             );
 
         /*
-            Verificar respuesta
+            Validar respuesta
         */
-        if (!respuestaRegistro.ok) {
+        if (!respuesta.ok) {
 
             throw new Error(
-                'Error al registrar tarea'
+                'Error al asignar tarea'
             );
 
         }
 
         /*
-            Recargar tareas
+            =====================================
+            5. RECARGAR TABLA
+            =====================================
         */
-        cargarTareasUsuario(
+        await cargarTareasUsuario(
             usuarioActual.id
         );
 
     } catch (error) {
 
         console.error(
-            'Error:',
+            'Error al registrar tarea:',
             error
+        );
+
+        alert(
+            'Ocurrió un error al asignar la tarea'
         );
 
     }
 
 }
-
-
 // ============================================
 // ELIMINAR TAREA
 // ============================================

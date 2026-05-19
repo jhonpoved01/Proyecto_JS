@@ -1,5 +1,5 @@
 // ============================================
-// IMPORTACIÓN DE FUNCIONES
+// IMPORTACIONES
 // ============================================
 
 import {
@@ -7,32 +7,31 @@ import {
     buscarUsuario,
     mostrarDatosUsuario,
     registrarTarea,
-    limpiarTodasLasTareas,
-    filtrarTareas
+    limpiarTodasLasTareas
 
 } from './js/task_manager.js';
 
+
 import {
 
-    validarCampo,
+    validarCampoVacio,
     mostrarError,
-    limpiarError,
-    mostrarMensajeSistema,
-    limpiarFormulario,
-    reiniciarContadorCaracteres
+    limpiarError
 
 } from './js/func_aux.js';
 
+
 // ============================================
-// INICIALIZACIÓN DEL DOM
+// INICIALIZACIÓN
 // ============================================
 
 /**
- * Esta función se ejecuta
- * cuando el DOM está completamente cargado.
+ * Esperar a que el DOM cargue
  */
 document.addEventListener(
+
     'DOMContentLoaded',
+
     function () {
 
         console.log(
@@ -40,204 +39,134 @@ document.addEventListener(
         );
 
         console.log(
-            '📝 Aplicación de registro de tareas iniciada'
+            '📝 Sistema de asignación de tareas iniciado'
         );
 
         /*
-            Ocultamos secciones inicialmente.
-        */
-        document.getElementById(
-            'seccionDatosUsuario'
-        ).classList.add('hidden');
-
-        document.getElementById(
-            'seccionFormularioTareas'
-        ).classList.add('hidden');
-
-        document.getElementById(
-            'tablaTareas'
-        ).classList.add('hidden');
-
-        document.getElementById(
-            'seccionFiltroTareas'
-        ).classList.add('hidden');
-
-        /*
-            Configuramos eventos.
+            Configurar eventos
         */
         configurarEventos();
 
     }
+
 );
 
+
 // ============================================
-// CONFIGURACIÓN DE EVENTOS
+// CONFIGURAR EVENTOS
 // ============================================
 
 /**
- * Configura todos los eventos
- * principales de la aplicación.
+ * Configurar todos los eventos
  */
 function configurarEventos() {
 
-    // ============================================
-    // FORMULARIO BUSCAR USUARIO
-    // ============================================
-
-    document.getElementById(
-        'formularioBusquedaUsuario'
-    ).addEventListener(
-        'submit',
-        manejarBusquedaUsuario
-    );
-
-    // ============================================
-    // FORMULARIO REGISTRAR TAREA
-    // ============================================
-
-    document.getElementById(
-        'formularioTareas'
-    ).addEventListener(
-        'submit',
-        manejarRegistroTarea
-    );
-
-    // ============================================
-    // BOTÓN LIMPIAR TAREAS
-    // ============================================
-
-    document.getElementById(
-        'botonLimpiarTareas'
-    ).addEventListener(
-        'click',
-        async function () {
-
-            /*
-                Confirmación antes
-                de eliminar.
-            */
-            const confirmar =
-                confirm(
-                    '¿Deseas eliminar todas las tareas?'
-                );
-
-            if (!confirmar) {
-
-                return;
-
-            }
-
-            await limpiarTodasLasTareas();
-
-        }
-    );
-
-    // ============================================
-    // CONTADOR DE CARACTERES
-    // ============================================
-
-    const textareaDescripcion =
-        document.getElementById(
-            'descripcionTarea'
+    /*
+        Buscar usuario
+    */
+    document
+        .getElementById(
+            'formularioBusquedaUsuario'
+        )
+        .addEventListener(
+            'submit',
+            manejarBusquedaUsuario
         );
 
-    textareaDescripcion.addEventListener(
-        'input',
-        function () {
+    /*
+        Registrar tarea
+    */
+    document
+        .getElementById(
+            'formularioTareas'
+        )
+    .addEventListener(
+        'submit',
+        async function (evento) {
 
-            /*
-                Obtenemos longitud actual.
-            */
-            const cantidadCaracteres =
-                textareaDescripcion.value.length;
+            evento.preventDefault();
 
-            /*
-                Actualizamos contador.
-            */
-            document.getElementById(
-                'contadorCaracteres'
-            ).textContent =
-                cantidadCaracteres;
+            console.log(
+                '🚀 FORMULARIO DETECTADO');
+                
 
-        }
-    );
+            await manejarRegistroTarea(evento);
 
-    // ============================================
-    // FILTRO DE TAREAS
-    // ============================================
+    }
+);
 
-    document.getElementById(
-        'filtroEstado'
-    ).addEventListener(
-        'change',
-        function (evento) {
+    /*
+        Limpiar tareas
+    */
+    document
+        .getElementById(
+            'botonLimpiarTareas'
+        )
+        .addEventListener(
+            'click',
+            async function () {
 
-            /*
-                Estado seleccionado.
-            */
-            const estadoSeleccionado =
-                evento.target.value;
+                const confirmar =
+                    confirm(
+                        '¿Deseas eliminar todas las tareas?'
+                    );
 
-            /*
-                Filtramos tareas.
-            */
-            filtrarTareas(
-                estadoSeleccionado
-            );
+                if (confirmar) {
 
-        }
-    );
+                    await limpiarTodasLasTareas();
+
+                }
+
+            }
+        );
 
 }
 
+
 // ============================================
-// MANEJAR BÚSQUEDA DE USUARIO
+// BUSCAR USUARIO
 // ============================================
 
 /**
- * Busca un usuario utilizando
- * el documento ingresado.
- *
+ * Manejar búsqueda usuario
+ * 
  * @param {Event} evento
  */
 async function manejarBusquedaUsuario(evento) {
 
     /*
-        Evitamos recarga.
+        Evitar recarga
     */
     evento.preventDefault();
 
     /*
-        Campo documento.
-    */
-    const inputDocumento =
-        document.getElementById(
-            'documentoUsuario'
-        );
-
-    /*
-        Valor ingresado.
+        Obtener documento
     */
     const documentoUsuario =
-        inputDocumento.value.trim();
+        document.getElementById(
+            'documentoUsuario'
+        ).value.trim();
 
     /*
-        Elemento error.
+        Obtener elemento error
     */
     const elementoError =
         document.getElementById(
             'errorDocumentoUsuario'
         );
 
-    // ============================================
-    // VALIDACIÓN
-    // ============================================
-
-    if (!validarCampo(documentoUsuario)) {
+    /*
+        Validar campo
+    */
+    if (
+        !validarCampoVacio(
+            documentoUsuario
+        )
+    ) {
 
         mostrarError(
             elementoError,
-            'Debes ingresar un documento.'
+            'El documento es obligatorio'
         );
 
         return;
@@ -245,114 +174,79 @@ async function manejarBusquedaUsuario(evento) {
     }
 
     /*
-        Limpiamos error.
+        Limpiar error
     */
     limpiarError(
         elementoError
     );
 
-    // ============================================
-    // BUSCAR USUARIO
-    // ============================================
-
+    /*
+        Buscar usuario
+    */
     const usuario =
         await buscarUsuario(
             documentoUsuario
         );
 
     /*
-        Si usuario no existe.
+        Verificar usuario
     */
     if (!usuario) {
 
         mostrarError(
             elementoError,
-            'Usuario no encontrado.'
+            'Usuario no encontrado'
         );
-
-        /*
-            Ocultamos secciones.
-        */
-        document.getElementById(
-            'seccionDatosUsuario'
-        ).classList.add('hidden');
-
-        document.getElementById(
-            'seccionFormularioTareas'
-        ).classList.add('hidden');
-
-        document.getElementById(
-            'seccionFiltroTareas'
-        ).classList.add('hidden');
-
-        document.getElementById(
-            'tablaTareas'
-        ).classList.add('hidden');
 
         return;
 
     }
 
-    // ============================================
-    // MOSTRAR USUARIO
-    // ============================================
-
-    mostrarDatosUsuario(usuario);
-
-    mostrarMensajeSistema(
-        'Usuario encontrado correctamente.',
-        'success'
+    /*
+        Mostrar usuario
+    */
+    mostrarDatosUsuario(
+        usuario
     );
 
 }
 
+
 // ============================================
-// MANEJAR REGISTRO DE TAREA
+// REGISTRAR TAREA
 // ============================================
 
 /**
- * Registra una nueva tarea.
- *
+ * Manejar registro tarea
+ * 
  * @param {Event} evento
  */
 async function manejarRegistroTarea(evento) {
 
     /*
-        Evitamos recarga.
+        Evitar recarga
     */
     evento.preventDefault();
 
-    // ============================================
-    // OBTENER CAMPOS
-    // ============================================
-
-    const tituloTarea =
+    /*
+        Obtener valores
+    */
+    const idTarea =
         document.getElementById(
-            'tituloTarea'
-        ).value.trim();
+            'selectorTareas'
+        ).value;
 
-    const descripcionTarea =
-        document.getElementById(
-            'descripcionTarea'
-        ).value.trim();
-
-    const estadoTarea =
+    const estado =
         document.getElementById(
             'estadoTarea'
         ).value;
 
-    // ============================================
-    // ELEMENTOS ERROR
-    // ============================================
-
-    const errorTitulo =
+    /*
+        Elementos error
+    */
+    const errorTarea =
         document.getElementById(
-            'errorTituloTarea'
-        );
-
-    const errorDescripcion =
-        document.getElementById(
-            'errorDescripcionTarea'
+            'errorSelectorTareas'
         );
 
     const errorEstado =
@@ -361,38 +255,22 @@ async function manejarRegistroTarea(evento) {
         );
 
     /*
-        Control validaciones.
+        Variable validación
     */
     let formularioValido = true;
 
-    // ============================================
-    // VALIDAR TÍTULO
-    // ============================================
-
-    if (!validarCampo(tituloTarea)) {
-
-        mostrarError(
-            errorTitulo,
-            'El título es obligatorio.'
-        );
-
-        formularioValido = false;
-
-    } else {
-
-        limpiarError(errorTitulo);
-
-    }
-
-    // ============================================
-    // VALIDAR DESCRIPCIÓN
-    // ============================================
-
-    if (!validarCampo(descripcionTarea)) {
+    /*
+        Validar tarea
+    */
+    if (
+        !validarCampoVacio(
+            idTarea
+        )
+    ) {
 
         mostrarError(
-            errorDescripcion,
-            'La descripción es obligatoria.'
+            errorTarea,
+            'Selecciona una tarea'
         );
 
         formularioValido = false;
@@ -400,33 +278,37 @@ async function manejarRegistroTarea(evento) {
     } else {
 
         limpiarError(
-            errorDescripcion
+            errorTarea
         );
 
     }
 
-    // ============================================
-    // VALIDAR ESTADO
-    // ============================================
-
-    if (!validarCampo(estadoTarea)) {
+    /*
+        Validar estado
+    */
+    if (
+        !validarCampoVacio(
+            estado
+        )
+    ) {
 
         mostrarError(
             errorEstado,
-            'Selecciona un estado.'
+            'Selecciona un estado'
         );
 
         formularioValido = false;
 
     } else {
 
-        limpiarError(errorEstado);
+        limpiarError(
+            errorEstado
+        );
 
     }
 
     /*
-        Si existe error,
-        detenemos proceso.
+        Verificar validación
     */
     if (!formularioValido) {
 
@@ -434,31 +316,32 @@ async function manejarRegistroTarea(evento) {
 
     }
 
-    // ============================================
-    // REGISTRAR TAREA
-    // ============================================
-
+    /*
+        Registrar tarea
+    */
     await registrarTarea({
 
-        titulo: tituloTarea,
-
-        descripcion: descripcionTarea,
-
-        estado: estadoTarea
+        idTarea,
+        estado
 
     });
 
-    // ============================================
-    // LIMPIAR FORMULARIO
-    // ============================================
-
-    limpiarFormulario(
-        document.getElementById(
+    /*
+        Reiniciar formulario
+    */
+    document
+        .getElementById(
             'formularioTareas'
         )
-    );
+        .reset();
 
-    reiniciarContadorCaracteres();
+    /*
+        Mensaje
+    */
+    console.log(
+    '✅ Tarea asignada correctamente'
+);
+return false;
 
 }
 
