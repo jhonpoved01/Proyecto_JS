@@ -12,7 +12,7 @@
  * @param {string} valor
  * @returns {boolean}
  */
-export function validarCampo(valor) {
+export function validarCampoVacio(valor) {
 
     return valor.trim().length > 0;
 

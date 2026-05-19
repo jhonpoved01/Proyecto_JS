@@ -51,33 +51,68 @@
       "email": "diego.herrera@mail.com"
     }
   ],
-  "tareas": [
+  "tareasDisponibles": [
+    {
+      "id": "1",
+      "titulo": "Practicar JavaScript",
+      "descripcion": "Estudiar DOM, eventos y fetch API"
+    },
     {
       "id": "2",
-      "titulo": "Estudiar DOM",
-      "descripcion": "Repasar eventos y manipulación del DOM",
-      "estado": "En progreso",
-      "fechaCreacion": "2026-05-18T11:30:00.000Z",
-      "userId": 1000000002,
-      "nombreUsuario": "Carlos Gómez"
+      "titulo": "Diseñar interfaz",
+      "descripcion": "Crear estilos CSS responsivos"
     },
     {
       "id": "3",
-      "titulo": "Subir proyecto a GitHub",
-      "descripcion": "Crear repositorio y realizar push final",
-      "estado": "Completada",
-      "fechaCreacion": "2026-05-18T13:15:00.000Z",
-      "userId": 1000000003,
-      "nombreUsuario": "María López"
+      "titulo": "Crear base de datos",
+      "descripcion": "Configurar JSON Server correctamente"
     },
     {
-      "titulo": "informar",
-      "descripcion": "informa la situacion",
-      "estado": "Pendiente",
-      "fechaCreacion": "2026-05-19T02:37:00.980Z",
-      "userId": "1000000002",
-      "nombreUsuario": "Carlos Gómez",
-      "id": "vZNzceBIuek"
+      "id": "4",
+      "titulo": "Estudiar modularización",
+      "descripcion": "Separar funciones en diferentes archivos JS"
+    },
+    {
+      "id": "5",
+      "titulo": "Practicar GitHub",
+      "descripcion": "Realizar commits y push correctamente"
+    },
+    {
+      "id": "6",
+      "titulo": "Optimizar código",
+      "descripcion": "Mejorar legibilidad y reutilización"
+    }
+  ],
+  "tareasAsignadas": [
+    {
+      "usuarioId": "1000000006",
+      "usuarioNombre": "Pedro Sánchez",
+      "tareaId": "2",
+      "titulo": "Diseñar interfaz",
+      "descripcion": "Crear estilos CSS responsivos",
+      "estado": "En progreso",
+      "fechaAsignacion": "2026-05-19T18:23:28.489Z",
+      "id": "U0Dl7Qmxt6A"
+    },
+    {
+      "usuarioId": "1000000004",
+      "usuarioNombre": "Juan Pérez",
+      "tareaId": "1",
+      "titulo": "Practicar JavaScript",
+      "descripcion": "Estudiar DOM, eventos y fetch API",
+      "estado": "En progreso",
+      "fechaAsignacion": "2026-05-19T18:31:26.200Z",
+      "id": "sHFpXwn5iT4"
+    },
+    {
+      "usuarioId": "1000000005",
+      "usuarioNombre": "Laura Martínez",
+      "tareaId": "5",
+      "titulo": "Practicar GitHub",
+      "descripcion": "Realizar commits y push correctamente",
+      "estado": "En progreso",
+      "fechaAsignacion": "2026-05-19T18:35:53.779Z",
+      "id": "ZVBwClYGVBE"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
