@@ -1,0 +1,84 @@
+{
+  "usuarios": [
+    {
+      "id": "1000000001",
+      "name": "Ana Torres",
+      "email": "ana.torres@mail.com"
+    },
+    {
+      "id": "1000000002",
+      "name": "Carlos Gómez",
+      "email": "carlos.gomez@mail.com"
+    },
+    {
+      "id": "1000000003",
+      "name": "María López",
+      "email": "maria.lopez@mail.com"
+    },
+    {
+      "id": "1000000004",
+      "name": "Juan Pérez",
+      "email": "juan.perez@mail.com"
+    },
+    {
+      "id": "1000000005",
+      "name": "Laura Martínez",
+      "email": "laura.martinez@mail.com"
+    },
+    {
+      "id": "1000000006",
+      "name": "Pedro Sánchez",
+      "email": "pedro.sanchez@mail.com"
+    },
+    {
+      "id": "1000000007",
+      "name": "Sofía Ramírez",
+      "email": "sofia.ramirez@mail.com"
+    },
+    {
+      "id": "1000000008",
+      "name": "Andrés Morales",
+      "email": "andres.morales@mail.com"
+    },
+    {
+      "id": "1000000009",
+      "name": "Valentina Cruz",
+      "email": "valentina.cruz@mail.com"
+    },
+    {
+      "id": "1000000010",
+      "name": "Diego Herrera",
+      "email": "diego.herrera@mail.com"
+    }
+  ],
+  "tareas": [
+    {
+      "id": "2",
+      "titulo": "Estudiar DOM",
+      "descripcion": "Repasar eventos y manipulación del DOM",
+      "estado": "En progreso",
+      "fechaCreacion": "2026-05-18T11:30:00.000Z",
+      "userId": 1000000002,
+      "nombreUsuario": "Carlos Gómez"
+    },
+    {
+      "id": "3",
+      "titulo": "Subir proyecto a GitHub",
+      "descripcion": "Crear repositorio y realizar push final",
+      "estado": "Completada",
+      "fechaCreacion": "2026-05-18T13:15:00.000Z",
+      "userId": 1000000003,
+      "nombreUsuario": "María López"
+    },
+    {
+      "titulo": "informar",
+      "descripcion": "informa la situacion",
+      "estado": "Pendiente",
+      "fechaCreacion": "2026-05-19T02:37:00.980Z",
+      "userId": "1000000002",
+      "nombreUsuario": "Carlos Gómez",
+      "id": "vZNzceBIuek"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

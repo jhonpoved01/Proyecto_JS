@@ -1,291 +1,464 @@
-/**
- * ============================================
- * EJERCICIO DE MANIPULACIÓN DEL DOM
- * ============================================
- * 
- * Objetivo: Aplicar conceptos del DOM para seleccionar elementos,
- * responder a eventos y crear nuevos elementos dinámicamente.
- * 
- * Autor: [Tu nombre aquí]
- * Fecha: [Fecha actual]
- * ============================================
- */
-
 // ============================================
-// 1. SELECCIÓN DE ELEMENTOS DEL DOM
+// IMPORTACIÓN DE FUNCIONES
 // ============================================
 
-/**
- * Seleccionamos los elementos del DOM que necesitamos manipular.
- * Usamos getElementById para obtener referencias a los elementos únicos.
- */
+import {
 
-// Formulario
-const messageForm = document.getElementById('messageForm');
+    buscarUsuario,
+    mostrarDatosUsuario,
+    registrarTarea,
+    limpiarTodasLasTareas,
+    filtrarTareas
 
-// Campos de entrada
-const userNameInput = document.getElementById('userName');
-const userMessageInput = document.getElementById('userMessage');
+} from './js/task_manager.js';
 
-// Botón de envío
-const submitBtn = document.getElementById('submitBtn');
+import {
 
-// Elementos para mostrar errores
-const userNameError = document.getElementById('userNameError');
-const userMessageError = document.getElementById('userMessageError');
+    validarCampo,
+    mostrarError,
+    limpiarError,
+    mostrarMensajeSistema,
+    limpiarFormulario,
+    reiniciarContadorCaracteres
 
-// Contenedor donde se mostrarán los mensajes
-const messagesContainer = document.getElementById('messagesContainer');
-
-// Estado vacío (mensaje que se muestra cuando no hay mensajes)
-const emptyState = document.getElementById('emptyState');
-
-// Contador de mensajes
-const messageCount = document.getElementById('messageCount');
-
-// Variable para llevar el conteo de mensajes
-let totalMessages = 0;
-
+} from './js/func_aux.js';
 
 // ============================================
-// 1. IMPORTACIONES
-// ============================================
-
-import { validateForm } from "./js/func_aux.js";
-
-import { createMessageElement } from "./js/creac_element.js";
-
-
-// ============================================
-// 3. FUNCIONES AUXILIARES 
+// INICIALIZACIÓN DEL DOM
 // ============================================
 
 /**
- * Limpia los campos del formulario
+ * Esta función se ejecuta
+ * cuando el DOM está completamente cargado.
  */
-function clearForm() {
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
 
-    messageForm.reset();
-}
-
-/**
- * Guarda un mensaje en el servidor
- * @param {Object} messageData
- * @returns {Promise<Response>}
- */
-async function saveMessage(messageData) {
-
-    return await fetch("http://localhost:3000/messages", {
-
-        method: "POST",
-
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify(messageData)
-    });
-}
-
-
-// ============================================
-// 4. CREACIÓN Y MANIPULACIÓN DE MENSAJES
-// ============================================
-
-/**
- * Procesa y crea un nuevo mensaje
- */
-async function handleNewMessage() {
-
-    const newMessage = {
-
-        userName: userNameInput.value.trim(),
-
-        message: userMessageInput.value.trim()
-    };
-
-    try {
-
-        const response = await saveMessage(newMessage);
-
-        if (!response.ok) {
-
-            throw new Error("Error al guardar");
-        }
-
-        createMessageElement(
-            newMessage.userName,
-            newMessage.message
+        console.log(
+            '✅ DOM completamente cargado'
         );
 
-        clearForm();
+        console.log(
+            '📝 Aplicación de registro de tareas iniciada'
+        );
 
-    } catch (error) {
+        /*
+            Ocultamos secciones inicialmente.
+        */
+        document.getElementById(
+            'seccionDatosUsuario'
+        ).classList.add('hidden');
 
-        console.error(error);
+        document.getElementById(
+            'seccionFormularioTareas'
+        ).classList.add('hidden');
 
-        alert("Error al guardar el mensaje");
+        document.getElementById(
+            'tablaTareas'
+        ).classList.add('hidden');
+
+        document.getElementById(
+            'seccionFiltroTareas'
+        ).classList.add('hidden');
+
+        /*
+            Configuramos eventos.
+        */
+        configurarEventos();
+
     }
+);
+
+// ============================================
+// CONFIGURACIÓN DE EVENTOS
+// ============================================
+
+/**
+ * Configura todos los eventos
+ * principales de la aplicación.
+ */
+function configurarEventos() {
+
+    // ============================================
+    // FORMULARIO BUSCAR USUARIO
+    // ============================================
+
+    document.getElementById(
+        'formularioBusquedaUsuario'
+    ).addEventListener(
+        'submit',
+        manejarBusquedaUsuario
+    );
+
+    // ============================================
+    // FORMULARIO REGISTRAR TAREA
+    // ============================================
+
+    document.getElementById(
+        'formularioTareas'
+    ).addEventListener(
+        'submit',
+        manejarRegistroTarea
+    );
+
+    // ============================================
+    // BOTÓN LIMPIAR TAREAS
+    // ============================================
+
+    document.getElementById(
+        'botonLimpiarTareas'
+    ).addEventListener(
+        'click',
+        async function () {
+
+            /*
+                Confirmación antes
+                de eliminar.
+            */
+            const confirmar =
+                confirm(
+                    '¿Deseas eliminar todas las tareas?'
+                );
+
+            if (!confirmar) {
+
+                return;
+
+            }
+
+            await limpiarTodasLasTareas();
+
+        }
+    );
+
+    // ============================================
+    // CONTADOR DE CARACTERES
+    // ============================================
+
+    const textareaDescripcion =
+        document.getElementById(
+            'descripcionTarea'
+        );
+
+    textareaDescripcion.addEventListener(
+        'input',
+        function () {
+
+            /*
+                Obtenemos longitud actual.
+            */
+            const cantidadCaracteres =
+                textareaDescripcion.value.length;
+
+            /*
+                Actualizamos contador.
+            */
+            document.getElementById(
+                'contadorCaracteres'
+            ).textContent =
+                cantidadCaracteres;
+
+        }
+    );
+
+    // ============================================
+    // FILTRO DE TAREAS
+    // ============================================
+
+    document.getElementById(
+        'filtroEstado'
+    ).addEventListener(
+        'change',
+        function (evento) {
+
+            /*
+                Estado seleccionado.
+            */
+            const estadoSeleccionado =
+                evento.target.value;
+
+            /*
+                Filtramos tareas.
+            */
+            filtrarTareas(
+                estadoSeleccionado
+            );
+
+        }
+    );
+
 }
 
-
 // ============================================
-// 5. EVENTOS
+// MANEJAR BÚSQUEDA DE USUARIO
 // ============================================
 
-messageForm.addEventListener("submit", async (e) => {
+/**
+ * Busca un usuario utilizando
+ * el documento ingresado.
+ *
+ * @param {Event} evento
+ */
+async function manejarBusquedaUsuario(evento) {
 
-    e.preventDefault();
+    /*
+        Evitamos recarga.
+    */
+    evento.preventDefault();
 
-    if (!validateForm()) {
+    /*
+        Campo documento.
+    */
+    const inputDocumento =
+        document.getElementById(
+            'documentoUsuario'
+        );
+
+    /*
+        Valor ingresado.
+    */
+    const documentoUsuario =
+        inputDocumento.value.trim();
+
+    /*
+        Elemento error.
+    */
+    const elementoError =
+        document.getElementById(
+            'errorDocumentoUsuario'
+        );
+
+    // ============================================
+    // VALIDACIÓN
+    // ============================================
+
+    if (!validarCampo(documentoUsuario)) {
+
+        mostrarError(
+            elementoError,
+            'Debes ingresar un documento.'
+        );
+
         return;
+
     }
 
-    await handleNewMessage();
-});
+    /*
+        Limpiamos error.
+    */
+    limpiarError(
+        elementoError
+    );
 
-// ============================================
-// 4. MANEJO DE EVENTOS
-// ============================================
-import { handleFormSubmit } from './js/man_even.js';
+    // ============================================
+    // BUSCAR USUARIO
+    // ============================================
 
-// Variables para almacenar los datos y los elementos
-let usuariosAutorizados = [];
+    const usuario =
+        await buscarUsuario(
+            documentoUsuario
+        );
 
-// Capturamos el formulario, los inputs y el contenedor de abajo
-const formulario = document.getElementById('messageForm'); // Cambia por el ID real de tu formulario o div contenedor
-const inputCedula = document.getElementById('userName');
-const inputMensaje = document.getElementById('userMessage');
-const contenedorMensajesPublicados = document.getElementById('messagesContainer'); // La sección de más abajo
+    /*
+        Si usuario no existe.
+    */
+    if (!usuario) {
 
-// Agrupamos los inputs en un objeto para pasarlos más fácil
-const elementosFormulario = {
-    formulario: formulario,
-    inputCedula: inputCedula,
-    inputMensaje: inputMensaje
-};
+        mostrarError(
+            elementoError,
+            'Usuario no encontrado.'
+        );
 
-// Función para cargar los usuarios de db.json
-async function iniciarBaseDeDatos() {
-    try {
-        const respuesta = await fetch('./server/db.json');
-        const datos = await respuesta.json();
-        
-        // Guardamos el array de usuarios del JSON (ajusta 'usuarios' según tu archivo JSON)
-        usuariosAutorizados = datos.usuarios; 
+        /*
+            Ocultamos secciones.
+        */
+        document.getElementById(
+            'seccionDatosUsuario'
+        ).classList.add('hidden');
 
-        // Escuchamos el evento de enviar/click del formulario
-        formulario.addEventListener('submit', (event) => {
-            
-            // Llamamos a la función importada pasándole todo lo que necesita
-            handleFormSubmit(event, elementosFormulario, usuariosAutorizados, (nombreUsuario, textoMensaje) => {
-                
-                // Esta es la función (callback) que se ejecuta si la validación fue exitosa:
-                // Crea la estructura del mensaje y la agrega a la sección de abajo
-                const nuevaTarjetaMensaje = `
-                    <div class="mensaje-tarjeta">
-                        <strong>${nombreUsuario}:</strong>
-                        <p>${textoMensaje}</p>
-                        <small>Publicado justo ahora</small>
-                    </div>
-                `;
-                
-                // Lo sumamos a la sección de mensajes publicados abajo
-                contenedorMensajesPublicados.innerHTML += nuevaTarjetaMensaje;
-                IncreaseCountMsg()
-                hideBoxNullMessages()
-            });
-        });
+        document.getElementById(
+            'seccionFormularioTareas'
+        ).classList.add('hidden');
 
-    } catch (error) {
-        console.error("Error al cargar la base de datos:", error);
+        document.getElementById(
+            'seccionFiltroTareas'
+        ).classList.add('hidden');
+
+        document.getElementById(
+            'tablaTareas'
+        ).classList.add('hidden');
+
+        return;
+
     }
+
+    // ============================================
+    // MOSTRAR USUARIO
+    // ============================================
+
+    mostrarDatosUsuario(usuario);
+
+    mostrarMensajeSistema(
+        'Usuario encontrado correctamente.',
+        'success'
+    );
+
 }
 
-const hideBoxNullMessages = () => {
-    let contentNullMsg = document.getElementById('emptyState');
-    contentNullMsg.style.display = "none"
+// ============================================
+// MANEJAR REGISTRO DE TAREA
+// ============================================
+
+/**
+ * Registra una nueva tarea.
+ *
+ * @param {Event} evento
+ */
+async function manejarRegistroTarea(evento) {
+
+    /*
+        Evitamos recarga.
+    */
+    evento.preventDefault();
+
+    // ============================================
+    // OBTENER CAMPOS
+    // ============================================
+
+    const tituloTarea =
+        document.getElementById(
+            'tituloTarea'
+        ).value.trim();
+
+    const descripcionTarea =
+        document.getElementById(
+            'descripcionTarea'
+        ).value.trim();
+
+    const estadoTarea =
+        document.getElementById(
+            'estadoTarea'
+        ).value;
+
+    // ============================================
+    // ELEMENTOS ERROR
+    // ============================================
+
+    const errorTitulo =
+        document.getElementById(
+            'errorTituloTarea'
+        );
+
+    const errorDescripcion =
+        document.getElementById(
+            'errorDescripcionTarea'
+        );
+
+    const errorEstado =
+        document.getElementById(
+            'errorEstadoTarea'
+        );
+
+    /*
+        Control validaciones.
+    */
+    let formularioValido = true;
+
+    // ============================================
+    // VALIDAR TÍTULO
+    // ============================================
+
+    if (!validarCampo(tituloTarea)) {
+
+        mostrarError(
+            errorTitulo,
+            'El título es obligatorio.'
+        );
+
+        formularioValido = false;
+
+    } else {
+
+        limpiarError(errorTitulo);
+
+    }
+
+    // ============================================
+    // VALIDAR DESCRIPCIÓN
+    // ============================================
+
+    if (!validarCampo(descripcionTarea)) {
+
+        mostrarError(
+            errorDescripcion,
+            'La descripción es obligatoria.'
+        );
+
+        formularioValido = false;
+
+    } else {
+
+        limpiarError(
+            errorDescripcion
+        );
+
+    }
+
+    // ============================================
+    // VALIDAR ESTADO
+    // ============================================
+
+    if (!validarCampo(estadoTarea)) {
+
+        mostrarError(
+            errorEstado,
+            'Selecciona un estado.'
+        );
+
+        formularioValido = false;
+
+    } else {
+
+        limpiarError(errorEstado);
+
+    }
+
+    /*
+        Si existe error,
+        detenemos proceso.
+    */
+    if (!formularioValido) {
+
+        return;
+
+    }
+
+    // ============================================
+    // REGISTRAR TAREA
+    // ============================================
+
+    await registrarTarea({
+
+        titulo: tituloTarea,
+
+        descripcion: descripcionTarea,
+
+        estado: estadoTarea
+
+    });
+
+    // ============================================
+    // LIMPIAR FORMULARIO
+    // ============================================
+
+    limpiarFormulario(
+        document.getElementById(
+            'formularioTareas'
+        )
+    );
+
+    reiniciarContadorCaracteres();
+
 }
 
-const IncreaseCountMsg = () => {
-    let msgCount = document.getElementById('messageCount');
-    let countValue = msgCount.getAttribute('value')
-    let increaseValue = parseInt(countValue) + 1
-    msgCount.setAttribute('value', increaseValue);
-    msgCount.textContent = increaseValue+" mensajes";
-}
-
-// Ejecutamos la carga inicial
-iniciarBaseDeDatos();
-// ============================================
-// 5. REGISTRO DE EVENTOS
-// ============================================
-
-/**
- * Aquí registramos todos los event listeners
- */
-
-// TODO: Registrar el evento 'submit' en el formulario
-// Pista: messageForm.addEventListener('submit', handleFormSubmit);
-
-// TODO: Registrar eventos 'input' en los campos para limpiar errores al escribir
-// Pista: userNameInput.addEventListener('input', handleInputChange);
-// Pista: userMessageInput.addEventListener('input', handleInputChange);
-
-
-// ============================================
-// 6. REFLEXIÓN Y DOCUMENTACIÓN
-// ============================================
-
-/**
- * PREGUNTAS DE REFLEXIÓN:
- * 
- * 1. ¿Qué elemento del DOM estás seleccionando?
- *    R: 
- * 
- * 2. ¿Qué evento provoca el cambio en la página?
- *    R: 
- * 
- * 3. ¿Qué nuevo elemento se crea?
- *    R: 
- * 
- * 4. ¿Dónde se inserta ese elemento dentro del DOM?
- *    R: 
- * 
- * 5. ¿Qué ocurre en la página cada vez que repites la acción?
- *    R: 
- */
-
-
-// ============================================
-// 7. INICIALIZACIÓN (OPCIONAL)
-// ============================================
-
-/**
- * Esta función se ejecuta cuando el DOM está completamente cargado
- */
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('✅ DOM completamente cargado');
-    console.log('📝 Aplicación de registro de mensajes iniciada');
-    
-    // Aquí puedes agregar cualquier inicialización adicional
-    // Por ejemplo, cargar mensajes guardados del localStorage
-});
-
-
-// ============================================
-// 8. FUNCIONALIDADES ADICIONALES (BONUS)
-// ============================================
-
-/**
- * RETOS ADICIONALES OPCIONALES:
- * 
- * 1. Agregar un botón para eliminar mensajes individuales
- * 2. Implementar localStorage para persistir los mensajes
- * 3. Agregar un contador de caracteres en el textarea
- * 4. Implementar un botón para limpiar todos los mensajes
- * 5. Agregar diferentes colores de avatar según el nombre del usuario
- * 6. Permitir editar mensajes existentes
- * 7. Agregar emojis o reacciones a los mensajes
- * 8. Implementar búsqueda/filtrado de mensajes
- */
