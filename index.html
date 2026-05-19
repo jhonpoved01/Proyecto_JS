@@ -4,93 +4,163 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>PROYECTO JS</title>
+    <title>Sistema de Registro de Tareas</title>
 </head>
+
 <body>
-    <div class="container">
-        <!-- Encabezado principal -->
-        <header class="header">
-            <h1 class="header__title">Registro de Tareas</h1>
-            <p class="header__subtitle">Practica la manipulación del DOM en tiempo real</p>
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="contenedor-principal">
+
+        <!-- ENCABEZADO -->
+        <header class="encabezado">
+            <h1>Sistema de Registro de Tareas</h1>
+            <p>
+                Gestión de tareas utilizando JavaScript,
+                DOM y JSON Server
+            </p>
         </header>
-
-        <!-- Formulario de entrada -->
-        <section class="form-section">
-            <div class="card">
-                <h2 class="card__title">Nueva Tarea</h2>
-
-                <form id="taskForm" class="form" novalidate>
-                    <div class="form__group">
-                        <label for="userName" class="form__label">
-                          
-                            Cedula de usuario
-
-                        </label>
-                        <input 
-                            type="text" 
-                            id="userName" 
-                            class="form__input" 
-
-                            placeholder="Ingresa tu cedula"
-
-                            aria-required="true"
-                        >
-                        <span class="form__error" id="userNameError"></span>
-                    </div>
-
-                    <div class="form__group">
-                        <label for="userMessage" class="form__label">
-                            Descripción de la Tarea
-                        </label>
-                        <textarea 
-                            id="userMessage" 
-
-                            class="form_input form_textarea" 
-                            placeholder="Escribe tu mensaje aquí..."
-
-                            rows="4"
-                            aria-required="true"
-                        ></textarea>
-                        <span class="form__error" id="userMessageError"></span>
-                    </div>
-
-                    <button type="submit" class="btn btn--primary" id="submitBtn">
-                        <span class="btn__text">Agregar Tarea</span>
-                        <span class="btn__icon">➤</span>
-                    </button>
-                </form>
-            </div>
-
-        <!-- Área de tareas -->
-        <section class="messages-section">
-            <div class="messages-header">
-
-                <h2 class="messages-header__title">Mensajes Publicados</h2>
-                <span class="messages-header__count" id="messageCount" value="0">0 mensajes</span>
-
-            </div>
+                
             
-            <div id="messagesContainer" class="messages-container">
-                <!-- Las tareas se agregarán aquí dinámicamente -->
-                <div class="messages-empty" id="emptyState">
-                    <svg class="messages-empty__icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
+        <!-- FORMULARIO DE BÚSQUEDA DE USUARIO -->
+        <section class="seccion-busqueda-usuario">
+            <h2>Buscar Usuario</h2>
+            <form id="formularioBusquedaUsuario">
 
-                    <p class="messages-empty__text">Aún no hay mensajes</p>
-                    <p class="messages-empty__subtext">Completa el formulario para agregar tu primer mensaje</p>
-                    <p class="messages-empty__text">Mensaje<p>
-
+                <!-- Documento -->
+                <div class="grupo-formulario">
+                    <label for="documentoUsuario"> Documento del Usuario</label>
+                    <input type="text" id="documentoUsuario"
+                    placeholder="Ejemplo: 1000000001" required>
+                        
+                    <!-- Mensaje de error -->
+                    <span
+                        id="errorDocumentoUsuario"
+                        class="mensaje-error"
+                    ></span>
                 </div>
+
+                <!-- Botón -->
+                <button type="submit">Buscar Usuario</button>
+            </form>
+        </section>
+
+
+        <!-- MENSAJES DEL SISTEMA -->
+        <div id="mensajeSistema"></div>
+
+
+        <!-- DATOS DEL USUARIO -->
+        <section id="seccionDatosUsuario" class="hidden" >
+            <h2>Información del Usuario</h2>
+            <p>
+                <strong>Nombre:</strong>
+                <span id="nombreUsuario"></span>
+            </p>
+            <p>
+                <strong>Correo:</strong>
+                <span id="correoUsuario"></span>
+            </p>
+        </section>
+
+
+        <!-- FORMULARIO DE REGISTRO DE TAREAS -->
+        <section id="seccionFormularioTareas" class="hidden">
+
+            <h2>Registrar Nueva Tarea</h2>
+            
+            <form id="formularioTareas">
+            
+                <!-- SELECCIONAR TAREA -->
+                <div class="grupo-formulario">
+                    <label for="selectorTareas">Selecciona una tarea</label>
+                    <select id="selectorTareas" required>
+                        <option value="">-- Selecciona una tarea --</option>
+                    </select>
+                    <span id="errorSelectorTareas" class="mensaje-error"></span>
+                </div>
+
+                <!-- ESTADO -->
+                <div class="grupo-formulario">
+                    <label for="estadoTarea">Estado de la Tarea</label>               
+                    <select id="estadoTarea" required>
+                        <option value="" disabled selected>Selecciona un estado </option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="En progreso">En progreso</option>
+                        <option value="Completada">Completada</option>
+                    </select>
+                    <span id="errorEstadoTarea" class="mensaje-error"></span>
+                </div>
+
+
+                <!-- BOTONES -->
+                <div class="acciones-formulario">
+                    <button type="submit">Registrar Tarea</button>
+
+                    <!-- Botón limpiar -->
+                    <button type="button" id="botonLimpiarTareas" 
+                        class="hidden">Limpiar Tareas
+                    </button>
+                </div>
+            </form>
+        </section>
+                    
+
+        <!-- FILTRO DE TAREAS -->
+        <section id="seccionFiltroTareas" class="hidden">
+            <h2>Filtrar Tareas</h2>
+            <div class="grupo-formulario">
+                <label for="filtroEstado">Filtrar por estado</label>
+                <select id="filtroEstado">
+                    <option value="Todas">Todas</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En progreso">En progreso</option>
+                    <option value="Completada">Completada</option>
+                </select>
             </div>
         </section>
 
-        <!-- Footer informativo -->
-        <footer class="footer">
-            <p class="footer__text">Ejercicio de manipulación del DOM | SENA - Desarrollo Web</p>
-        </footer>
+
+        <!-- TABLA DE TAREAS -->
+        <section class="seccion-tabla-tareas">
+
+            <h2>Tareas Registradas</h2>
+
+            <!-- Mensaje sin tareas -->
+            <div id="mensajeSinTareas">
+                <p>No hay tareas registradas.</p>
+            </div>
+                
+            <!-- Tabla -->
+            <table id="tablaTareas" class="hidden">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+
+                        <th>Descripción</th>
+
+                        <th>Estado</th>
+
+                        <th>Fecha</th>
+
+                        <th>Usuario</th>
+
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+
+                <!--
+                    Aquí se insertarán las tareas
+                    dinámicamente desde JavaScript
+                -->
+
+                <tbody id="cuerpoTablaTareas"></tbody>
+            </table>
+        </section>
     </div>
 
-    <script src="./script.js" type="module" ></script>
-</body> 
+                
+    <!-- SCRIPT PRINCIPAL -->
+    <script src="script.js" type="module"></script>
+</body>
 </html>
