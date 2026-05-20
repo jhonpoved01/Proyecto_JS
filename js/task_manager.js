@@ -14,7 +14,7 @@ import {
 // URL DEL SERVIDOR
 // ============================================
 
-const API_URL = 'http://localhost:3000';
+const API_URL = `${window.location.protocol}//${window.location.hostname}:3000`;
 
 
 // ============================================
@@ -355,8 +355,8 @@ function renderizarTareas(tareas) {
 
         <td>
             ${new Date(
-                tarea.fechaAsignacion
-            ).toLocaleDateString()}
+            tarea.fechaAsignacion
+        ).toLocaleDateString()}
         </td>
 
         <td>
@@ -460,7 +460,7 @@ export async function registrarTarea(datosTarea) {
 
             );
 
-        
+
         /*
             =====================================
             3. CREAR REGISTRO DE ASIGNACIÓN
@@ -475,7 +475,7 @@ export async function registrarTarea(datosTarea) {
         */
         const tareaAsignada = {
 
-           usuarioId:
+            usuarioId:
                 usuarioActual.id.toString(),
 
             usuarioNombre:

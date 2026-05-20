@@ -95,16 +95,6 @@
       "id": "rYoa3y2gH0M"
     },
     {
-      "usuarioId": "1000000001",
-      "usuarioNombre": "Ana Torres",
-      "tareaId": "3",
-      "titulo": "Crear base de datos",
-      "descripcion": "Configurar JSON Server correctamente",
-      "estado": "En progreso",
-      "fechaAsignacion": "2026-05-19T19:37:04.022Z",
-      "id": "zbUSNjuwqEA"
-    },
-    {
       "usuarioId": "1000000002",
       "usuarioNombre": "Carlos Gómez",
       "tareaId": "2",
@@ -163,6 +153,16 @@
       "estado": "Completada",
       "fechaAsignacion": "2026-05-19T19:59:52.368Z",
       "id": "PgdonYxb3Fs"
+    },
+    {
+      "usuarioId": "1000000001",
+      "usuarioNombre": "Ana Torres",
+      "tareaId": "3",
+      "titulo": "Crear base de datos",
+      "descripcion": "Configurar JSON Server correctamente",
+      "estado": "En progreso",
+      "fechaAsignacion": "2026-05-20T03:12:20.878Z",
+      "id": "24Q2qka"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

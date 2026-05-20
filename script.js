@@ -1,25 +1,20 @@
 // ============================================
 // IMPORTACIONES
 // ============================================
-fetch("http://10.5.225.112:3000")
-
 import {
-
     buscarUsuario,
     mostrarDatosUsuario,
     registrarTarea,
     limpiarTodasLasTareas
-
 } from './js/task_manager.js';
 
-
 import {
-
     validarCampoVacio,
     mostrarError,
     limpiarError
-
 } from './js/func_aux.js';
+
+fetch("http://10.5.225.112:3000");
 
 
 // ============================================
@@ -81,20 +76,20 @@ function configurarEventos() {
         .getElementById(
             'formularioTareas'
         )
-    .addEventListener(
-        'submit',
-        async function (evento) {
+        .addEventListener(
+            'submit',
+            async function (evento) {
 
-            evento.preventDefault();
+                evento.preventDefault();
 
-            console.log(
-                '🚀 FORMULARIO DETECTADO');
-                
+                console.log(
+                    '🚀 FORMULARIO DETECTADO');
 
-            await manejarRegistroTarea(evento);
 
-    }
-);
+                await manejarRegistroTarea(evento);
+
+            }
+        );
 
     /*
         Limpiar tareas
@@ -340,9 +335,9 @@ async function manejarRegistroTarea(evento) {
         Mensaje
     */
     console.log(
-    '✅ Tarea asignada correctamente'
-);
-return false;
+        '✅ Tarea asignada correctamente'
+    );
+    return false;
 
 }
 
