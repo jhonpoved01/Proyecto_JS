@@ -85,34 +85,84 @@
   ],
   "tareasAsignadas": [
     {
-      "usuarioId": "1000000006",
-      "usuarioNombre": "Pedro Sánchez",
+      "usuarioId": "1000000002",
+      "usuarioNombre": "Carlos Gómez",
+      "tareaId": "3",
+      "titulo": "Crear base de datos",
+      "descripcion": "Configurar JSON Server correctamente",
+      "estado": "Pendiente",
+      "fechaAsignacion": "2026-05-19T19:36:44.907Z",
+      "id": "rYoa3y2gH0M"
+    },
+    {
+      "usuarioId": "1000000001",
+      "usuarioNombre": "Ana Torres",
+      "tareaId": "3",
+      "titulo": "Crear base de datos",
+      "descripcion": "Configurar JSON Server correctamente",
+      "estado": "En progreso",
+      "fechaAsignacion": "2026-05-19T19:37:04.022Z",
+      "id": "zbUSNjuwqEA"
+    },
+    {
+      "usuarioId": "1000000002",
+      "usuarioNombre": "Carlos Gómez",
       "tareaId": "2",
       "titulo": "Diseñar interfaz",
       "descripcion": "Crear estilos CSS responsivos",
-      "estado": "En progreso",
-      "fechaAsignacion": "2026-05-19T18:23:28.489Z",
-      "id": "U0Dl7Qmxt6A"
+      "estado": "Completada",
+      "fechaAsignacion": "2026-05-19T19:38:27.605Z",
+      "id": "I9WYZ4tBB2Y"
     },
     {
-      "usuarioId": "1000000004",
-      "usuarioNombre": "Juan Pérez",
+      "usuarioId": "1000000002",
+      "usuarioNombre": "Carlos Gómez",
+      "tareaId": "2",
+      "titulo": "Diseñar interfaz",
+      "descripcion": "Crear estilos CSS responsivos",
+      "estado": "Pendiente",
+      "fechaAsignacion": "2026-05-19T19:43:45.656Z",
+      "id": "omxMN4_AcCw"
+    },
+    {
+      "usuarioId": "1000000002",
+      "usuarioNombre": "Carlos Gómez",
+      "tareaId": "3",
+      "titulo": "Crear base de datos",
+      "descripcion": "Configurar JSON Server correctamente",
+      "estado": "En progreso",
+      "fechaAsignacion": "2026-05-19T19:48:35.561Z",
+      "id": "uSQ66IjDxNU"
+    },
+    {
+      "usuarioId": "1000000002",
+      "usuarioNombre": "Carlos Gómez",
+      "tareaId": "4",
+      "titulo": "Estudiar modularización",
+      "descripcion": "Separar funciones en diferentes archivos JS",
+      "estado": "En progreso",
+      "fechaAsignacion": "2026-05-19T19:50:18.780Z",
+      "id": "umXNjXpVmtQ"
+    },
+    {
+      "usuarioId": "1000000002",
+      "usuarioNombre": "Carlos Gómez",
       "tareaId": "1",
       "titulo": "Practicar JavaScript",
       "descripcion": "Estudiar DOM, eventos y fetch API",
       "estado": "En progreso",
-      "fechaAsignacion": "2026-05-19T18:31:26.200Z",
-      "id": "sHFpXwn5iT4"
+      "fechaAsignacion": "2026-05-19T19:57:37.101Z",
+      "id": "QDk9JKPWrsM"
     },
     {
-      "usuarioId": "1000000005",
-      "usuarioNombre": "Laura Martínez",
-      "tareaId": "5",
-      "titulo": "Practicar GitHub",
-      "descripcion": "Realizar commits y push correctamente",
-      "estado": "En progreso",
-      "fechaAsignacion": "2026-05-19T18:35:53.779Z",
-      "id": "ZVBwClYGVBE"
+      "usuarioId": "1000000002",
+      "usuarioNombre": "Carlos Gómez",
+      "tareaId": "2",
+      "titulo": "Diseñar interfaz",
+      "descripcion": "Crear estilos CSS responsivos",
+      "estado": "Completada",
+      "fechaAsignacion": "2026-05-19T19:59:52.368Z",
+      "id": "PgdonYxb3Fs"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
