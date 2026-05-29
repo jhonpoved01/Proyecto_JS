@@ -352,7 +352,7 @@ boton.addEventListener('click', async () => {
                 titulo: titulo,
                 descripcion: descripcion
             };
-            const respuesta = await fetch('http://localhost:3000/tareasDisponibles', {
+            const respuesta = await fetch(`${API_URL}/tareasDisponibles`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -373,3 +373,6 @@ boton.addEventListener('click', async () => {
         }
     
 });
+import {mostrarTareasConBotones}from './js/task_manager.js';
+
+mostrarTareasConBotones();

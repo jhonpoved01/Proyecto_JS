@@ -53,21 +53,6 @@
   ],
   "tareasDisponibles": [
     {
-      "id": "1",
-      "titulo": "Practicar JavaScript",
-      "descripcion": "Estudiar DOM, eventos y fetch API"
-    },
-    {
-      "id": "2",
-      "titulo": "Diseñar interfaz",
-      "descripcion": "Crear estilos CSS responsivos"
-    },
-    {
-      "id": "3",
-      "titulo": "Crear base de datos",
-      "descripcion": "Configurar JSON Server correctamente"
-    },
-    {
       "id": "4",
       "titulo": "Estudiar modularización",
       "descripcion": "Separar funciones en diferentes archivos JS"
@@ -81,11 +66,6 @@
       "id": "6",
       "titulo": "Optimizar código",
       "descripcion": "Mejorar legibilidad y reutilización"
-    },
-    {
-      "titulo": "hacer aseo",
-      "descripcion": "pronto",
-      "id": "_j01tJ2"
     },
     {
       "titulo": "realizar correctamente los ejercicios",
@@ -127,12 +107,12 @@
     {
       "usuarioId": "1000000002",
       "usuarioNombre": "Carlos Gómez",
-      "tareaId": "3",
-      "titulo": "Crear base de datos",
-      "descripcion": "Configurar JSON Server correctamente",
+      "tareaId": "1",
+      "titulo": "Practicar JavaScript",
+      "descripcion": "Estudiar DOM, eventos y fetch API",
       "estado": "Pendiente",
-      "fechaAsignacion": "2026-05-29T06:18:45.164Z",
-      "id": "IUuCHfg"
+      "fechaAsignacion": "2026-05-29T20:43:21.141Z",
+      "id": "Ii6-Kzp"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
