@@ -26,7 +26,7 @@
 
     --color-boton-hover: #2563eb;
 
-    --color-error: #ef4444;
+    --color-error: #f32323;
 
     --color-progreso: #f59e0b;
 
@@ -368,25 +368,18 @@ tbody tr:hover {
 }
 
 .estado-progreso {
-
     color: var(--color-progreso);
-
     font-weight: bold;
-
 }
 
 .estado-completada {
-
     color: var(--color-completada);
-
     font-weight: bold;
-
 }
 
 
 /* CLASE HIDDEN */
 .hidden {
-
     display: none;
 
 }
@@ -431,9 +424,38 @@ select {
     button {
 
         width: 100%;
-
         margin-bottom: 10px;
 
     }
+
+}
+#selectorTareasPersonalizado {
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background: white;
+
+}
+
+#tareaSeleccionada {
+    padding: 10px;
+    background-color: #f2f2f2;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.fila-tarea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.acciones-tarea button {
+    margin-left: 5px;
 
 }

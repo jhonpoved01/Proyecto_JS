@@ -459,6 +459,7 @@ export async function registrarTarea(datosTarea) {
                     datosTarea.idTarea
 
             );
+    
 
 
         /*
@@ -659,3 +660,56 @@ export async function limpiarTodasLasTareas() {
     }
 
 }
+//funcion para agregar botones de eliminar-editar
+export async function mostrarTareasConBotones(usuario) {
+    
+    const respuesta = await fetch(`${API_URL}/tareasDisponibles`)
+    const tareas = await respuesta.json();
+    const contenedorTareas = document.getElementById('contenedorTareas');
+    contenedorTareas.innerHTML = '';
+    tareas.forEach(tarea => {
+        const fila = document.createElement('div');
+        fila.classList.add('fila-tarea');
+        fila.innerHTML = `
+            <span>${tarea.titulo}</span>
+            <div>
+                <button class="btn-editar" data-id="${tarea.id}">Editar ✏️</button>
+                <button class="btn-eliminar" data-id="${tarea.id}">Eliminar 🗑️</button>
+            </div>
+        `;
+        contenedorTareas.appendChild(fila);
+    });
+        configurarBotones();
+}
+function configurarBotones() {
+    document.querySelectorAll('.btn-editar').forEach(boton => {
+        boton.addEventListener('click', async function () {
+            const id = this.dataset.id;
+            const nuevoTitulo = prompt('ingrese el nombre de la tarea que desea modificar: ');
+            if (!nuevoTitulo) return;
+            await fetch(`${API_URL}/tareasDisponibles/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ titulo: nuevoTitulo })
+            });
+            mostrarTareasConBotones();
+            
+        });
+    });
+
+//eliminar
+document.querySelectorAll('.btn-eliminar').forEach(boton => {
+    boton.addEventListener('click', async function () {
+        const id = this.dataset.id;
+        const confirmar = confirm('¿Deseas eliminar esta tarea?');
+        if (!confirmar) return;
+        await fetch(`${API_URL}/tareasDisponibles/${id}`, {
+            method: 'DELETE'
+        });
+        mostrarTareasConBotones();
+    });
+  });
+}
+mostrarTareasConBotones();
