@@ -459,6 +459,7 @@ export async function registrarTarea(datosTarea) {
                     datosTarea.idTarea
 
             );
+    
 
 
         /*

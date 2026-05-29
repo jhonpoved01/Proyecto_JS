@@ -340,4 +340,36 @@ async function manejarRegistroTarea(evento) {
     return false;
 
 }
+//linea para boton agregar tarea
+const boton = document.getElementById('botonAgregarTarea');
+boton.addEventListener('click', async () => {
+    const titulo = prompt('Ingrese el título de la nueva tarea: ');
+    if (!titulo) return;
+    const descripcion = prompt('Ingrese la descripción de la nueva tarea: ');
+    if (!descripcion) return;
+        try {
+            const nuevaTarea = {
+                titulo: titulo,
+                descripcion: descripcion
+            };
+            const respuesta = await fetch('http://localhost:3000/tareasDisponibles', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(nuevaTarea)
+            });
 
+            const tareaGuardada = await respuesta.json();
+            const selectorTareas = document.getElementById('selectorTareas');
+            const opcion = document.createElement('option');
+            opcion.value = tareaGuardada.id;
+            opcion.textContent = tareaGuardada.titulo;
+            selectorTareas.appendChild(opcion);
+            alert('Tarea agregada correctamente');
+           } catch (error) {
+               console.error(error);
+               alert('Error al agregar tarea');
+        }
+    
+});

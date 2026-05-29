@@ -81,79 +81,19 @@
       "id": "6",
       "titulo": "Optimizar código",
       "descripcion": "Mejorar legibilidad y reutilización"
+    },
+    {
+      "titulo": "hacer aseo",
+      "descripcion": "pronto",
+      "id": "_j01tJ2"
+    },
+    {
+      "titulo": "realizar correctamente los ejercicios",
+      "descripcion": "estudiar para completar todos de forma correcta",
+      "id": "pO46XBV"
     }
   ],
   "tareasAsignadas": [
-    {
-      "usuarioId": "1000000002",
-      "usuarioNombre": "Carlos Gómez",
-      "tareaId": "3",
-      "titulo": "Crear base de datos",
-      "descripcion": "Configurar JSON Server correctamente",
-      "estado": "Pendiente",
-      "fechaAsignacion": "2026-05-19T19:36:44.907Z",
-      "id": "rYoa3y2gH0M"
-    },
-    {
-      "usuarioId": "1000000002",
-      "usuarioNombre": "Carlos Gómez",
-      "tareaId": "2",
-      "titulo": "Diseñar interfaz",
-      "descripcion": "Crear estilos CSS responsivos",
-      "estado": "Completada",
-      "fechaAsignacion": "2026-05-19T19:38:27.605Z",
-      "id": "I9WYZ4tBB2Y"
-    },
-    {
-      "usuarioId": "1000000002",
-      "usuarioNombre": "Carlos Gómez",
-      "tareaId": "2",
-      "titulo": "Diseñar interfaz",
-      "descripcion": "Crear estilos CSS responsivos",
-      "estado": "Pendiente",
-      "fechaAsignacion": "2026-05-19T19:43:45.656Z",
-      "id": "omxMN4_AcCw"
-    },
-    {
-      "usuarioId": "1000000002",
-      "usuarioNombre": "Carlos Gómez",
-      "tareaId": "3",
-      "titulo": "Crear base de datos",
-      "descripcion": "Configurar JSON Server correctamente",
-      "estado": "En progreso",
-      "fechaAsignacion": "2026-05-19T19:48:35.561Z",
-      "id": "uSQ66IjDxNU"
-    },
-    {
-      "usuarioId": "1000000002",
-      "usuarioNombre": "Carlos Gómez",
-      "tareaId": "4",
-      "titulo": "Estudiar modularización",
-      "descripcion": "Separar funciones en diferentes archivos JS",
-      "estado": "En progreso",
-      "fechaAsignacion": "2026-05-19T19:50:18.780Z",
-      "id": "umXNjXpVmtQ"
-    },
-    {
-      "usuarioId": "1000000002",
-      "usuarioNombre": "Carlos Gómez",
-      "tareaId": "1",
-      "titulo": "Practicar JavaScript",
-      "descripcion": "Estudiar DOM, eventos y fetch API",
-      "estado": "En progreso",
-      "fechaAsignacion": "2026-05-19T19:57:37.101Z",
-      "id": "QDk9JKPWrsM"
-    },
-    {
-      "usuarioId": "1000000002",
-      "usuarioNombre": "Carlos Gómez",
-      "tareaId": "2",
-      "titulo": "Diseñar interfaz",
-      "descripcion": "Crear estilos CSS responsivos",
-      "estado": "Completada",
-      "fechaAsignacion": "2026-05-19T19:59:52.368Z",
-      "id": "PgdonYxb3Fs"
-    },
     {
       "usuarioId": "1000000001",
       "usuarioNombre": "Ana Torres",
@@ -163,6 +103,36 @@
       "estado": "En progreso",
       "fechaAsignacion": "2026-05-20T03:12:20.878Z",
       "id": "24Q2qka"
+    },
+    {
+      "usuarioId": "1000000001",
+      "usuarioNombre": "Ana Torres",
+      "tareaId": "_j01tJ2",
+      "titulo": "hacer aseo",
+      "descripcion": "pronto",
+      "estado": "En progreso",
+      "fechaAsignacion": "2026-05-29T06:12:26.502Z",
+      "id": "gmg-2vT"
+    },
+    {
+      "usuarioId": "1000000001",
+      "usuarioNombre": "Ana Torres",
+      "tareaId": "pO46XBV",
+      "titulo": "realizar correctamente los ejercicios",
+      "descripcion": "estudiar para completar todos de forma correcta",
+      "estado": "En progreso",
+      "fechaAsignacion": "2026-05-29T06:13:20.740Z",
+      "id": "z7VSvbZ"
+    },
+    {
+      "usuarioId": "1000000002",
+      "usuarioNombre": "Carlos Gómez",
+      "tareaId": "3",
+      "titulo": "Crear base de datos",
+      "descripcion": "Configurar JSON Server correctamente",
+      "estado": "Pendiente",
+      "fechaAsignacion": "2026-05-29T06:18:45.164Z",
+      "id": "IUuCHfg"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
